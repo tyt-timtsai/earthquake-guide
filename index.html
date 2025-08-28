@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earthquake Safety Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 414px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding-bottom: 120px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #FF416C, #FF4B2B);
+            padding: 60px 20px 20px 20px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            padding: 0 80px;
+        }
+
+        .header .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .language-selector {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.9);
+            border: 2px solid rgba(255,255,255,0.5);
+            color: #333;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        .language-selector:hover {
+            background: rgba(255,255,255,1);
+            transform: scale(1.05);
+        }
+
+        .back-button {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255,255,255,0.9);
+            border: 2px solid rgba(255,255,255,0.5);
+            color: #333;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: rgba(255,255,255,1);
+            transform: scale(1.05);
+        }
+
+        .emergency-button {
+            background: linear-gradient(135deg, #FF6B35, #FF8E53);
+            color: white;
+            border: none;
+            margin: 30px 20px;
+            padding: 40px 20px;
+            border-radius: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            width: calc(100% - 40px);
+            box-shadow: 0 6px 20px rgba(255,107,53,0.3);
+            position: relative;
+            transition: transform 0.2s ease;
+        }
+
+        .emergency-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255,107,53,0.4);
+        }
+
+        .emergency-button:active {
+            transform: translateY(0px);
+        }
+
+        .location-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .location-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            border: 2px solid #f0f0f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .location-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-color: #667eea;
+        }
+
+        .location-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .location-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .location-desc {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .action-guide {
+            padding: 20px;
+        }
+
+        .action-visual {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 15px;
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-visual::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .action-icon {
+            font-size: 72px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .action-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .action-steps {
+            list-style: none;
+            margin: 25px 0;
+        }
+
+        .action-steps li {
+            background: white;
+            margin: 10px 0;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 5px solid;
+            font-size: 18px;
+            font-weight: 600;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .step-drop { border-left-color: #FF4B2B; }
+        .step-cover { border-left-color: #FF8C00; }
+        .step-hold { border-left-color: #00AA00; }
+
+        .situation-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .situation-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            border: 2px solid #f0f0f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .situation-card:hover {
+            transform: translateY(-2px);
+            border-color: #667eea;
+            box-shadow: 0 4px 15px rgba(102,126,234,0.2);
+        }
+
+        .situation-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .situation-title {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .specific-guide {
+            padding: 20px;
+        }
+
+        .guide-visual {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            color: white;
+            margin-bottom: 25px;
+        }
+
+        .guide-illustration {
+            font-size: 80px;
+            margin-bottom: 15px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .instructions {
+            list-style: none;
+        }
+
+        .instructions li {
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        .do { background: linear-gradient(90deg, rgba(0,170,0,0.1), rgba(0,170,0,0.05)); }
+        .dont { background: linear-gradient(90deg, rgba(255,0,0,0.1), rgba(255,0,0,0.05)); }
+        .warning { background: linear-gradient(90deg, rgba(255,140,0,0.1), rgba(255,140,0,0.05)); }
+
+        .instruction-icon {
+            font-size: 24px;
+            margin-right: 15px;
+        }
+
+        .audio-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+            box-shadow: 0 4px 15px rgba(102,126,234,0.3);
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            width: 100%;
+            max-width: 414px;
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-item {
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover {
+            background: #f5f5f5;
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .nav-text {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                max-width: 100%;
+            }
+            
+            .emergency-button {
+                font-size: 24px;
+                padding: 35px 20px;
+            }
+            
+            .location-icon {
+                font-size: 40px;
+            }
+            
+            .action-icon {
+                font-size: 60px;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+        
+        .safety-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 15px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .visual-guide {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .dch-steps {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .dch-step {
+            flex: 1;
+            min-width: 100px;
+            text-align: center;
+            padding: 10px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .step-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #FF6B35;
+            margin-bottom: 5px;
+        }
+        
+        .step-text {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .emergency-card {
+            background: linear-gradient(90deg, rgba(255,0,0,0.05), rgba(255,0,0,0.1));
+            border-color: #FF0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <button class="back-button" onclick="goBack()">← <span data-text="back">Back</span></button>
+            <select class="language-selector" onchange="changeLanguage(this.value)">
+                <option value="zh">繁體中文</option>
+                <option value="en">English</option>
+                <option value="ja">日本語</option>
+            </select>
+            <h1 data-text="app-title">Earthquake Safety Guide</h1>
+            <div class="subtitle" data-text="app-subtitle">Stay Safe During Earthquakes</div>
+        </div>
+
+        <!-- Home Screen -->
+        <div id="home-screen" class="screen active">
+            <button class="emergency-button" onclick="showEmergencyMode()">
+                ⚡ <span data-text="emergency-button">EARTHQUAKE HAPPENING NOW?</span>
+            </button>
+            
+            <div class="location-grid">
+                <div class="location-card" onclick="showLocationGuide('indoor')">
+                    <span class="location-icon">🏠</span>
+                    <div class="location-title" data-text="indoor-title">Indoor Spaces</div>
+                    <div class="location-desc" data-text="indoor-desc">Home, office, public buildings</div>
+                </div>
+                
+                <div class="location-card" onclick="showLocationGuide('outdoor')">
+                    <span class="location-icon">🌳</span>
+                    <div class="location-title" data-text="outdoor-title">Outdoor Areas</div>
+                    <div class="location-desc" data-text="outdoor-desc">Streets, parks, vehicles</div>
+                </div>
+                
+                <div class="location-card" onclick="showAbout()">
+                    <span class="location-icon">ℹ️</span>
+                    <div class="location-title" data-text="about-title">Safety Tips</div>
+                    <div class="location-desc" data-text="about-desc">Learn basic principles</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Emergency Mode Screen -->
+        <div id="emergency-screen" class="screen">
+            <div style="padding: 20px; text-align: center;">
+                <h2 style="color: #FF0000; font-size: 24px; margin-bottom: 30px;" data-text="emergency-title">🚨 EARTHQUAKE HAPPENING</h2>
+                <p style="font-size: 18px; margin-bottom: 30px;" data-text="emergency-question">Where are you RIGHT NOW?</p>
+                
+                <div class="location-grid">
+                    <div class="location-card" onclick="showEmergencyGuide('indoor')" style="border-color: #FF0000; background: linear-gradient(90deg, rgba(255,0,0,0.05), rgba(255,0,0,0.1));">
+                        <span class="location-icon">🏠</span>
+                        <div class="location-title" data-text="emergency-indoor">INSIDE BUILDING</div>
+                    </div>
+                    
+                    <div class="location-card" onclick="showEmergencyGuide('outdoor')" style="border-color: #FF0000; background: linear-gradient(90deg, rgba(255,0,0,0.05), rgba(255,0,0,0.1));">
+                        <span class="location-icon">🌳</span>
+                        <div class="location-title" data-text="emergency-outdoor">OUTSIDE</div>
+                    </div>
+                    
+                    <div class="location-card" onclick="showEmergencyGuide('vehicle')" style="border-color: #FF0000; background: linear-gradient(90deg, rgba(255,0,0,0.05), rgba(255,0,0,0.1));">
+                        <span class="location-icon">🚗</span>
+                        <div class="location-title" data-text="emergency-vehicle">IN VEHICLE</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Location Guide Screen -->
+        <div id="location-screen" class="screen">
+            <div class="action-guide">
+                <div class="visual-guide">
+                    <img src="" id="main-safety-image" class="safety-image" alt="Drop Cover Hold" style="display: none;">
+                    <div class="action-visual">
+                        <span class="action-icon" id="location-icon">🏠</span>
+                        <div class="action-title" id="location-title" data-text="drop-cover-hold">Drop, Cover, Hold On</div>
+                    </div>
+                </div>
+                
+                <ul class="action-steps">
+                    <li class="step-drop">🔴 <span data-text="step-drop">1. DROP to ground immediately</span></li>
+                    <li class="step-cover">🟡 <span data-text="step-cover">2. Take COVER under sturdy furniture</span></li>
+                    <li class="step-hold">🟢 <span data-text="step-hold">3. HOLD ON and protect your head</span></li>
+                </ul>
+                
+                <p id="situation-question" style="text-align: center; margin: 20px 0; font-weight: 600;" data-text="specific-situation">What's your specific situation?</p>
+                
+                <div class="situation-grid" id="situation-grid">
+                    <!-- Situations will be populated by JavaScript -->
+                </div>
+                
+                <button class="audio-button">
+                    🔊 <span data-text="voice-guide">Voice Instructions</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Specific Situation Screen -->
+        <div id="situation-screen" class="screen">
+            <div class="specific-guide">
+                <div class="visual-guide">
+                    <img src="" id="situation-image" class="safety-image" alt="Situation Guide" style="display: none;">
+                    <div class="guide-visual">
+                        <div class="guide-illustration" id="situation-illustration">🛏️</div>
+                        <h3 id="situation-title" data-text="in-bed">In Bed</h3>
+                    </div>
+                </div>
+                
+                <ul class="instructions" id="situation-instructions">
+                    <!-- Instructions will be populated by JavaScript -->
+                </ul>
+                
+                <button class="audio-button">
+                    🔊 <span data-text="play-instructions">Play Instructions</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- About Screen -->
+        <div id="about-screen" class="screen">
+            <div class="specific-guide">
+                <div class="guide-visual">
+                    <div class="guide-illustration">🛡️</div>
+                    <h3 data-text="safety-principles">Safety Principles</h3>
+                </div>
+                
+                <ul class="instructions">
+                    <li class="instructions do">
+                        <span class="instruction-icon">🔴</span>
+                        <span data-text="principle-drop">DROP to the ground immediately</span>
+                    </li>
+                    <li class="instructions do">
+                        <span class="instruction-icon">🟡</span>
+                        <span data-text="principle-cover">Take COVER under sturdy furniture</span>
+                    </li>
+                    <li class="instructions do">
+                        <span class="instruction-icon">🟢</span>
+                        <span data-text="principle-hold">HOLD ON and protect your head</span>
+                    </li>
+                    <li class="instructions warning">
+                        <span class="instruction-icon">⚠️</span>
+                        <span data-text="principle-wait">Wait until shaking completely stops</span>
+                    </li>
+                    <li class="instructions dont">
+                        <span class="instruction-icon">❌</span>
+                        <span data-text="principle-dont-run">DON'T run outside during shaking</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer Navigation -->
+        <div class="footer-nav">
+            <div class="nav-item active" onclick="showScreen('home')">
+                <span class="nav-icon">🏠</span>
+                <div class="nav-text" data-text="nav-home">Home</div>
+            </div>
+            <div class="nav-item" onclick="showEmergencyMode()">
+                <span class="nav-icon">🚨</span>
+                <div class="nav-text" data-text="nav-emergency">Emergency</div>
+            </div>
+            <div class="nav-item" onclick="showAbout()">
+                <span class="nav-icon">ℹ️</span>
+                <div class="nav-text" data-text="nav-about">About</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        // Language translations
+        const translations = {
+            en: {
+                "app-title": "Earthquake Safety Guide",
+                "app-subtitle": "Stay Safe During Earthquakes",
+                "emergency-button": "Click for Quick Safety Guide",
+                "indoor-title": "Indoor Spaces",
+                "indoor-desc": "Home, office, public buildings",
+                "outdoor-title": "Outdoor Areas", 
+                "outdoor-desc": "Streets, parks, vehicles",
+                "about-title": "Safety Tips",
+                "about-desc": "Learn basic principles",
+                "emergency-title": "🚨 EARTHQUAKE HAPPENING",
+                "emergency-question": "Where are you RIGHT NOW?",
+                "emergency-indoor": "INSIDE BUILDING",
+                "emergency-outdoor": "OUTSIDE",
+                "emergency-vehicle": "IN VEHICLE",
+                "drop-cover-hold": "Drop, Cover, Hold On",
+                "step-drop": "1. DROP to ground immediately",
+                "step-cover": "2. Take COVER under sturdy furniture", 
+                "step-hold": "3. HOLD ON and protect your head",
+                "specific-situation": "What's your specific situation?",
+                "voice-guide": "Voice Instructions",
+                "play-instructions": "Play Instructions",
+                "nav-home": "Home",
+                "nav-emergency": "Emergency",
+                "nav-about": "Tips",
+                "back": "Back",
+                "in-bed": "In Bed",
+                "in-kitchen": "In Kitchen",
+                "in-bathroom": "In Bathroom", 
+                "in-office": "In Office",
+                "in-theater": "In Theater",
+                "in-elevator": "Near Elevator",
+                "on-street": "On Street",
+                "in-car": "In Car",
+                "at-station": "At Station",
+                "safety-principles": "Safety Principles",
+                "principle-drop": "DROP to the ground immediately",
+                "principle-cover": "Take COVER under sturdy furniture",
+                "principle-hold": "HOLD ON and protect your head",
+                "principle-wait": "Wait until shaking completely stops",
+                "principle-dont-run": "DON'T run outside during shaking"
+            },
+            zh: {
+                "app-title": "地震安全指南",
+                "app-subtitle": "地震時保持安全",
+                "emergency-button": "點擊獲取快速安全指南",
+                "indoor-title": "室內空間",
+                "indoor-desc": "家中、辦公室、公共建築",
+                "outdoor-title": "戶外區域",
+                "outdoor-desc": "街道、公園、車輛",
+                "about-title": "安全須知",
+                "about-desc": "學習基本原則",
+                "emergency-title": "🚨 地震正在發生",
+                "emergency-question": "您現在在哪裡？",
+                "emergency-indoor": "建築物內",
+                "emergency-outdoor": "戶外",
+                "emergency-vehicle": "車輛內",
+                "drop-cover-hold": "趴下、掩護、穩住",
+                "step-drop": "1. 立即趴下",
+                "step-cover": "2. 找掩護躲在堅固家具下",
+                "step-hold": "3. 抓穩並保護頭部",
+                "specific-situation": "您的具體情況是？",
+                "voice-guide": "語音指導",
+                "play-instructions": "播放指示",
+                "nav-home": "首頁",
+                "nav-emergency": "緊急",
+                "nav-about": "須知",
+                "back": "返回",
+                "in-bed": "在床上",
+                "in-kitchen": "在廚房",
+                "in-bathroom": "在浴室",
+                "in-office": "在辦公室", 
+                "in-theater": "在電影院",
+                "in-elevator": "電梯附近",
+                "on-street": "在街上",
+                "in-car": "在車內",
+                "at-station": "在車站",
+                "safety-principles": "安全原則",
+                "principle-drop": "立即趴下",
+                "principle-cover": "找掩護躲在堅固家具下",
+                "principle-hold": "抓穩並保護頭部",
+                "principle-wait": "等到震動完全停止",
+                "principle-dont-run": "震動時不要跑到外面"
+            },
+            ja: {
+                "app-title": "地震安全ガイド",
+                "app-subtitle": "地震時の安全確保",
+                "emergency-button": "クイック安全ガイドをクリック",
+                "indoor-title": "屋内スペース",
+                "indoor-desc": "自宅、オフィス、公共建物",
+                "outdoor-title": "屋外エリア",
+                "outdoor-desc": "街路、公園、車両",
+                "about-title": "安全のコツ",
+                "about-desc": "基本原則を学ぶ",
+                "emergency-title": "🚨 地震発生中",
+                "emergency-question": "現在どこにいますか？",
+                "emergency-indoor": "建物内",
+                "emergency-outdoor": "屋外",
+                "emergency-vehicle": "車両内",
+                "drop-cover-hold": "身を伏せ、隠れ、しがみつく",
+                "step-drop": "1. すぐに身を伏せる",
+                "step-cover": "2. 頑丈な家具の下に隠れる",
+                "step-hold": "3. しっかりつかんで頭を守る",
+                "specific-situation": "具体的な状況は？",
+                "voice-guide": "音声ガイド",
+                "play-instructions": "指示を再生",
+                "nav-home": "ホーム",
+                "nav-emergency": "緊急",
+                "nav-about": "コツ",
+                "back": "戻る",
+                "in-bed": "ベッドで",
+                "in-kitchen": "キッチンで",
+                "in-bathroom": "浴室で",
+                "in-office": "オフィスで",
+                "in-theater": "映画館で", 
+                "in-elevator": "エレベーター付近",
+                "on-street": "路上で",
+                "in-car": "車内で",
+                "at-station": "駅で",
+                "safety-principles": "安全の原則",
+                "principle-drop": "すぐに身を伏せる",
+                "principle-cover": "頑丈な家具の下に隠れる",
+                "principle-hold": "しっかりつかんで頭を守る",
+                "principle-wait": "揺れが完全に止まるまで待つ",
+                "principle-dont-run": "揺れ中に外に走らない"
+            }
+        };
+
+        // Situation data
+        const situations = {
+            indoor: [
+                { id: 'bed', icon: '🛏️', key: 'in-bed' },
+                { id: 'kitchen', icon: '🍳', key: 'in-kitchen' },
+                { id: 'bathroom', icon: '🚿', key: 'in-bathroom' },
+                { id: 'office', icon: '💼', key: 'in-office' },
+                { id: 'theater', icon: '🎬', key: 'in-theater' },
+                { id: 'elevator', icon: '🏢', key: 'in-elevator' }
+            ],
+            outdoor: [
+                { id: 'street', icon: '🚶', key: 'on-street' },
+                { id: 'car', icon: '🚗', key: 'in-car' },
+                { id: 'station', icon: '🚉', key: 'at-station' }
+            ]
+        };
+
+        // Current state
+        let currentLanguage = 'zh';
+        let currentLocation = '';
+        let navigationStack = [];
+
+        // Initialize app
+        function init() {
+            console.log('Initializing app...');
+            updateLanguage();
+            console.log('App initialized successfully');
+        }
+
+        // Language functions
+        function changeLanguage(lang) {
+            console.log('Changing language to:', lang);
+            currentLanguage = lang;
+            updateLanguage();
+        }
+
+        function updateLanguage() {
+            const elements = document.querySelectorAll('[data-text]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-text');
+                if (translations[currentLanguage] && translations[currentLanguage][key]) {
+                    element.textContent = translations[currentLanguage][key];
+                }
+            });
+        }
+
+        // Navigation functions
+        function showScreen(screenId) {
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            // Show target screen
+            document.getElementById(screenId + '-screen').classList.add('active');
+            
+            // Update navigation
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Update back button
+            const backBtn = document.querySelector('.back-button');
+            if (screenId === 'home') {
+                backBtn.style.display = 'none';
+                navigationStack = [];
+            } else {
+                backBtn.style.display = 'block';
+            }
+        }
+
+        function goBack() {
+            if (navigationStack.length > 0) {
+                const previousScreen = navigationStack.pop();
+                showScreen(previousScreen);
+            } else {
+                showScreen('home');
+            }
+        }
+
+        // Emergency functions
+        function showEmergencyMode() {
+            console.log('Showing emergency mode');
+            navigationStack.push('home');
+            showScreen('emergency');
+            
+            // Add vibration if supported
+            if (navigator.vibrate) {
+                navigator.vibrate([200, 100, 200]);
+            }
+        }
+
+        function showEmergencyGuide(location) {
+            navigationStack.push('emergency');
+            showLocationGuide(location, true);
+        }
+
+        // Location guide functions
+        function showLocationGuide(location, isEmergency = false) {
+            console.log('Showing location guide for:', location, 'Emergency:', isEmergency);
+            if (!isEmergency) {
+                navigationStack.push('home');
+            }
+            
+            currentLocation = location;
+            showScreen('location');
+            
+            // Update location display
+            const locationIcon = document.getElementById('location-icon');
+            const locationTitle = document.getElementById('location-title');
+            const mainImage = document.getElementById('main-safety-image');
+            
+            // Hide the image since safetyImages was removed
+            mainImage.style.display = 'none';
+            
+            if (location === 'indoor') {
+                locationIcon.textContent = '🏠';
+                locationTitle.setAttribute('data-text', 'drop-cover-hold');
+            } else if (location === 'outdoor') {
+                locationIcon.textContent = '🌳';
+                locationTitle.setAttribute('data-text', 'drop-cover-hold');
+            } else if (location === 'vehicle') {
+                locationIcon.textContent = '🚗';
+                locationTitle.setAttribute('data-text', 'drop-cover-hold');
+            }
+            
+            // Populate situations
+            populateSituations(location);
+            updateLanguage();
+        }
+
+        function populateSituations(location) {
+            const situationGrid = document.getElementById('situation-grid');
+            const situationQuestion = document.getElementById('situation-question');
+            situationGrid.innerHTML = '';
+            
+            const locationSituations = situations[location] || [];
+            
+            // Hide the question text if no situations available
+            if (locationSituations.length === 0) {
+                situationQuestion.style.display = 'none';
+            } else {
+                situationQuestion.style.display = 'block';
+            }
+            
+            locationSituations.forEach(situation => {
+                const card = document.createElement('div');
+                card.className = 'situation-card';
+                card.onclick = () => showSituationGuide(situation.id);
+                
+                card.innerHTML = `
+                    <span class="situation-icon">${situation.icon}</span>
+                    <div class="situation-title" data-text="${situation.key}">${translations[currentLanguage][situation.key] || situation.key}</div>
+                `;
+                
+                situationGrid.appendChild(card);
+            });
+        }
+
+        // Situation guide functions
+        function showSituationGuide(situationId) {
+            navigationStack.push('location');
+            showScreen('situation');
+            
+            const illustration = document.getElementById('situation-illustration');
+            const title = document.getElementById('situation-title');
+            const instructions = document.getElementById('situation-instructions');
+            const situationImage = document.getElementById('situation-image');
+            
+            // Clear previous instructions
+            instructions.innerHTML = '';
+            
+            // Set illustration and title based on situation
+            const situationData = getSituationData(situationId);
+            illustration.textContent = situationData.icon;
+            title.setAttribute('data-text', situationData.titleKey);
+            title.textContent = translations[currentLanguage][situationData.titleKey] || situationData.titleKey;
+            
+            // Show appropriate image based on situation
+            const imageMap = {
+                'bed': 'inBed',
+                'kitchen': 'kitchen',
+                'bathroom': 'inBathroom',
+                'office': 'atOffice',
+                'theater': 'atTheater',
+                'elevator': 'doNotElevator'
+            };
+            
+            // Hide the image since safetyImages was removed
+            situationImage.style.display = 'none';
+            
+            // Add instructions
+            situationData.instructions.forEach(instruction => {
+                const li = document.createElement('li');
+                li.className = `instructions ${instruction.type}`;
+                li.innerHTML = `
+                    <span class="instruction-icon">${instruction.icon}</span>
+                    <span data-text="${instruction.key}">${translations[currentLanguage][instruction.key] || instruction.text}</span>
+                `;
+                instructions.appendChild(li);
+            });
+            
+            updateLanguage();
+        }
+
+        function getSituationData(situationId) {
+            const situationData = {
+                bed: {
+                    icon: '🛏️',
+                    titleKey: 'in-bed',
+                    instructions: [
+                        { type: 'do', icon: '✅', key: 'bed-stay', text: 'STAY in bed' },
+                        { type: 'do', icon: '✅', key: 'bed-pillow', text: 'Use pillow to protect head' },
+                        { type: 'do', icon: '✅', key: 'bed-prone', text: 'Turn face down (prone position)' },
+                        { type: 'dont', icon: '❌', key: 'bed-dont-get-up', text: "DON'T get up and run" },
+                        { type: 'warning', icon: '⚠️', key: 'bed-wait', text: 'Wait until shaking completely stops' }
+                    ]
+                },
+                kitchen: {
+                    icon: '🍳',
+                    titleKey: 'in-kitchen',
+                    instructions: [
+                        { type: 'do', icon: '🔥', key: 'kitchen-fire-close', text: 'Turn off fire if next to stove' },
+                        { type: 'do', icon: '✅', key: 'kitchen-cover', text: 'Take cover under table' },
+                        { type: 'dont', icon: '❌', key: 'kitchen-dont-reach', text: "DON'T risk injury to reach stove" },
+                        { type: 'warning', icon: '⚠️', key: 'kitchen-hot', text: 'Watch for hot pots and spilling liquids' },
+                        { type: 'warning', icon: '⚠️', key: 'kitchen-glass', text: 'Beware of falling dishes and glassware' }
+                    ]
+                },
+                bathroom: {
+                    icon: '🚿',
+                    titleKey: 'in-bathroom',
+                    instructions: [
+                        { type: 'dont', icon: '❌', key: 'bathroom-dont-rush', text: "DON'T rush out of bathroom" },
+                        { type: 'do', icon: '✅', key: 'bathroom-crouch', text: 'Crouch low and protect head' },
+                        { type: 'do', icon: '✅', key: 'bathroom-basin', text: 'Use basin or hands to shield head' },
+                        { type: 'warning', icon: '⚠️', key: 'bathroom-mirror', text: 'Watch for falling mirrors' },
+                        { type: 'warning', icon: '⚠️', key: 'bathroom-items', text: 'Beware of items from shelves' }
+                    ]
+                },
+                office: {
+                    icon: '💼',
+                    titleKey: 'in-office',
+                    instructions: [
+                        { type: 'do', icon: '✅', key: 'office-desk', text: 'Hide under your desk' },
+                        { type: 'do', icon: '✅', key: 'office-drop-cover', text: 'Drop, cover, hold on' },
+                        { type: 'do', icon: '✅', key: 'office-protect-head', text: 'Protect head and neck' },
+                        { type: 'dont', icon: '❌', key: 'office-dont-look-up', text: "DON'T look up" },
+                        { type: 'warning', icon: '⚠️', key: 'office-lights', text: 'Risk of falling lights and ceiling tiles' }
+                    ]
+                },
+                theater: {
+                    icon: '🎬',
+                    titleKey: 'in-theater',
+                    instructions: [
+                        { type: 'do', icon: '✅', key: 'theater-aisle', text: 'Crouch in aisle between seat rows' },
+                        { type: 'do', icon: '✅', key: 'theater-bend', text: 'If no space: bend over, hug head' },
+                        { type: 'do', icon: '✅', key: 'theater-below-seat', text: 'Stay below seat back level' },
+                        { type: 'warning', icon: '⚠️', key: 'theater-wall', text: 'Find sturdy wall if in aisle' }
+                    ]
+                },
+                elevator: {
+                    icon: '🏢',
+                    titleKey: 'in-elevator',
+                    instructions: [
+                        { type: 'do', icon: '✅', key: 'elevator-outside', text: 'Crouch next to exterior elevator wall' },
+                        { type: 'do', icon: '✅', key: 'elevator-drop-cover', text: 'Drop, cover, hold on' },
+                        { type: 'do', icon: '✅', key: 'elevator-items', text: 'Use personal items to protect head' },
+                        { type: 'dont', icon: '❌', key: 'elevator-never-enter', text: 'NEVER enter elevator during earthquake' }
+                    ]
+                },
+                street: {
+                    icon: '🚶',
+                    titleKey: 'on-street',
+                    instructions: [
+                        { type: 'do', icon: '✅', key: 'street-protect-head', text: 'Use bag/items to protect head' },
+                        { type: 'do', icon: '✅', key: 'street-avoid-buildings', text: 'Move away from buildings and trees' },
+                        { type: 'do', icon: '✅', key: 'street-stay-calm', text: 'Stay calm, wait for shaking to stop' },
+                        { type: 'dont', icon: '❌', key: 'bed-dont-get-up', text: "DON'T try to run indoors" },
+                        { type: 'warning', icon: '⚠️', key: 'kitchen-glass', text: 'Watch for falling signs and debris' }
+                    ]
+                },
+                car: {
+                    icon: '🚗',
+                    titleKey: 'in-car',
+                    instructions: [
+                        { type: 'do', icon: '✅', key: 'car-reduce-speed', text: 'Safely reduce speed and pull over' },
+                        { type: 'do', icon: '✅', key: 'car-hazard-lights', text: 'Turn on hazard lights' },
+                        { type: 'do', icon: '✅', key: 'car-avoid-bridges', text: 'Avoid bridges and overpasses' },
+                        { type: 'warning', icon: '⚠️', key: 'bed-wait', text: 'Wait until shaking stops before continuing' }
+                    ]
+                },
+                station: {
+                    icon: '🚉',
+                    titleKey: 'at-station',
+                    instructions: [
+                        { type: 'do', icon: '✅', key: 'station-grab-rails', text: 'Hold onto handrails firmly' },
+                        { type: 'do', icon: '✅', key: 'station-lower-center', text: 'Lower your center of gravity' },
+                        { type: 'do', icon: '✅', key: 'office-drop-cover', text: 'Drop, cover, hold if space allows' },
+                        { type: 'warning', icon: '⚠️', key: 'theater-bend', text: 'If crowded: crouch and protect head' }
+                    ]
+                }
+            };
+            
+            return situationData[situationId] || situationData.bed;
+        }
+
+        // Quiz functions - replaced with About
+        function showAbout() {
+            navigationStack.push('home');
+            showScreen('about');
+        }
+
+        // Audio functions
+        function playAudio() {
+            if ('speechSynthesis' in window) {
+                const text = getCurrentInstructions();
+                const utterance = new SpeechSynthesisUtterance(text);
+                
+                // Set language
+                if (currentLanguage === 'zh') {
+                    utterance.lang = 'zh-TW';
+                } else if (currentLanguage === 'ja') {
+                    utterance.lang = 'ja-JP';
+                } else {
+                    utterance.lang = 'en-US';
+                }
+                
+                utterance.rate = 0.8;
+                utterance.pitch = 1;
+                
+                speechSynthesis.speak(utterance);
+            } else {
+                alert(getTranslation('audio-not-supported') || 'Audio not supported on this device.');
+            }
+        }
+
+        function getCurrentInstructions() {
+            const currentScreen = document.querySelector('.screen.active');
+            let text = '';
+            
+            if (currentScreen.id === 'location-screen') {
+                text = getTranslation('drop-cover-hold') || 'Drop, Cover, Hold On. ';
+                text += getTranslation('step-drop') || '1. Drop to ground immediately. ';
+                text += getTranslation('step-cover') || '2. Take cover under sturdy furniture. ';
+                text += getTranslation('step-hold') || '3. Hold on and protect your head.';
+            } else if (currentScreen.id === 'situation-screen') {
+                const instructions = currentScreen.querySelectorAll('.instructions li span[data-text]');
+                instructions.forEach(instruction => {
+                    text += instruction.textContent + '. ';
+                });
+            }
+            
+            return text;
+        }
+
+        // Utility functions
+        function getTranslation(key) {
+            return translations[currentLanguage] && translations[currentLanguage][key];
+        }
+
+        // Extended translations - remove quiz-related translations
+        Object.assign(translations.en, {
+            'bed-stay': 'STAY in bed',
+            'bed-pillow': 'Use pillow to protect head',
+            'bed-prone': 'Turn face down (prone position)',
+            'bed-dont-get-up': "DON'T get up and run",
+            'bed-wait': 'Wait until shaking completely stops',
+            'kitchen-fire-close': 'Turn off fire if next to stove',
+            'kitchen-cover': 'Take cover under table',
+            'kitchen-dont-reach': "DON'T risk injury to reach stove",
+            'kitchen-hot': 'Watch for hot pots and spilling liquids',
+            'kitchen-glass': 'Beware of falling dishes and glassware',
+            'bathroom-dont-rush': "DON'T rush out of bathroom",
+            'bathroom-crouch': 'Crouch low and protect head',
+            'bathroom-basin': 'Use basin or hands to shield head',
+            'bathroom-mirror': 'Watch for falling mirrors',
+            'bathroom-items': 'Beware of items from shelves',
+            'office-desk': 'Hide under your desk',
+            'office-drop-cover': 'Drop, cover, hold on',
+            'office-protect-head': 'Protect head and neck',
+            'office-dont-look-up': "DON'T look up",
+            'office-lights': 'Risk of falling lights and ceiling tiles',
+            'theater-aisle': 'Crouch in aisle between seat rows',
+            'theater-bend': 'If no space: bend over, hug head',
+            'theater-below-seat': 'Stay below seat back level',
+            'theater-wall': 'Find sturdy wall if in aisle',
+            'elevator-outside': 'Crouch next to exterior elevator wall',
+            'elevator-drop-cover': 'Drop, cover, hold on',
+            'elevator-items': 'Use personal items to protect head',
+            'elevator-never-enter': 'NEVER enter elevator during earthquake',
+            'street-protect-head': 'Use bag/items to protect head',
+            'street-avoid-buildings': 'Move away from buildings and trees',
+            'street-stay-calm': 'Stay calm, wait for shaking to stop',
+            'car-reduce-speed': 'Safely reduce speed and pull over',
+            'car-hazard-lights': 'Turn on hazard lights',
+            'car-avoid-bridges': 'Avoid bridges and overpasses',
+            'station-grab-rails': 'Hold onto handrails firmly',
+            'station-lower-center': 'Lower your center of gravity',
+            'audio-not-supported': 'Audio not supported on this device.'
+        });
+
+        Object.assign(translations.zh, {
+            'bed-stay': '留在床上',
+            'bed-pillow': '用枕頭保護頭部',
+            'bed-prone': '趴下面朝下',
+            'bed-dont-get-up': '不要起身跑動',
+            'bed-wait': '等到震動完全停止',
+            'kitchen-fire-close': '如在爐火旁立即關火',
+            'kitchen-cover': '躲在桌子下方',
+            'kitchen-dont-reach': '不要冒險去關火',
+            'kitchen-hot': '注意熱鍋和潑灑液體',
+            'kitchen-glass': '小心掉落的餐具和玻璃',
+            'bathroom-dont-rush': '不要急著衝出浴室',
+            'bathroom-crouch': '蹲低保護頭部',
+            'bathroom-basin': '用臉盆或手保護頭部',
+            'bathroom-mirror': '注意掉落的鏡子',
+            'bathroom-items': '小心架上物品掉落',
+            'office-desk': '躲在辦公桌下',
+            'office-drop-cover': '趴下、掩護、穩住',
+            'office-protect-head': '保護頭頸部',
+            'office-dont-look-up': '不要往上看',
+            'office-lights': '小心掉落的燈具和天花板',
+            'theater-aisle': '蹲在座椅間走道',
+            'theater-bend': '沒空間時：彎腰抱頭',
+            'theater-below-seat': '保持低於椅背高度',
+            'theater-wall': '在走道找堅固牆壁',
+            'elevator-outside': '蹲在電梯外牆旁',
+            'elevator-drop-cover': '趴下、掩護、穩住',
+            'elevator-items': '用隨身物品保護頭部',
+            'elevator-never-enter': '絕不要進入電梯',
+            'street-protect-head': '用包包等物品保護頭部',
+            'street-avoid-buildings': '遠離建築物和樹木',
+            'street-stay-calm': '保持冷靜，等待震動停止',
+            'car-reduce-speed': '安全減速並靠邊停車',
+            'car-hazard-lights': '開啟危險警示燈',
+            'car-avoid-bridges': '避開橋樑和高架橋',
+            'station-grab-rails': '牢牢抓住扶手',
+            'station-lower-center': '降低重心',
+            'audio-not-supported': '此設備不支援語音功能。'
+        });
+
+        Object.assign(translations.ja, {
+            'bed-stay': 'ベッドに留まる',
+            'bed-pillow': '枕で頭を保護する',
+            'bed-prone': 'うつ伏せになる',
+            'bed-dont-get-up': '起き上がって走らない',
+            'bed-wait': '揺れが完全に止まるまで待つ',
+            'kitchen-fire-close': 'コンロの近くなら火を止める',
+            'kitchen-cover': 'テーブルの下に隠れる',
+            'kitchen-dont-reach': '危険を冒してコンロに近づかない',
+            'kitchen-hot': '熱い鍋や液体の飛散に注意',
+            'kitchen-glass': '落下する食器やガラスに注意',
+            'bathroom-dont-rush': '浴室から慌てて出ない',
+            'bathroom-crouch': 'しゃがんで頭を保護',
+            'bathroom-basin': '洗面器や手で頭を守る',
+            'bathroom-mirror': '落下する鏡に注意',
+            'bathroom-items': '棚からの落下物に注意',
+            'office-desk': '机の下に隠れる',
+            'office-drop-cover': '身を伏せ、隠れ、しがみつく',
+            'office-protect-head': '頭と首を保護',
+            'office-dont-look-up': '上を見ない',
+            'office-lights': '落下する照明や天井材に注意',
+            'theater-aisle': '座席間の通路にしゃがむ',
+            'theater-bend': 'スペースがない時：かがんで頭を抱える',
+            'theater-below-seat': '座席の背もたれより低く',
+            'theater-wall': '通路では頑丈な壁を見つける',
+            'elevator-outside': 'エレベーター外壁の隣にしゃがむ',
+            'elevator-drop-cover': '身を伏せ、隠れ、しがみつく',
+            'elevator-items': '身の回り品で頭を保護',
+            'elevator-never-enter': '絶対にエレベーターに入らない',
+            'street-protect-head': 'かばんなどで頭を保護',
+            'street-avoid-buildings': '建物や木から離れる',
+            'street-stay-calm': '冷静に、揺れが止まるのを待つ',
+            'car-reduce-speed': '安全に減速して路肩に停車',
+            'car-hazard-lights': 'ハザードランプを点灯',
+            'car-avoid-bridges': '橋や高架橋を避ける',
+            'station-grab-rails': '手すりをしっかり握る',
+            'station-lower-center': '重心を低くする',
+            'audio-not-supported': 'このデバイスでは音声がサポートされていません。'
+        });
+
+        // Initialize app when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, starting initialization...');
+            init();
+            
+            // Add event listeners to avoid inline onclick issues
+            document.querySelector('.emergency-button').addEventListener('click', showEmergencyMode);
+            
+            // Home screen location cards
+            const locationCards = document.querySelectorAll('#home-screen .location-card');
+            locationCards[0].addEventListener('click', () => showLocationGuide('indoor'));
+            locationCards[1].addEventListener('click', () => showLocationGuide('outdoor'));
+            locationCards[2].addEventListener('click', showAbout);
+            
+            // Emergency screen location cards
+            const emergencyCards = document.querySelectorAll('#emergency-screen .location-card');
+            emergencyCards[0].addEventListener('click', () => showEmergencyGuide('indoor'));
+            emergencyCards[1].addEventListener('click', () => showEmergencyGuide('outdoor'));
+            emergencyCards[2].addEventListener('click', () => showEmergencyGuide('vehicle'));
+            
+            // Navigation items
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems[0].addEventListener('click', () => showScreen('home'));
+            navItems[1].addEventListener('click', showEmergencyMode);
+            navItems[2].addEventListener('click', showAbout);
+            
+            // Back button
+            document.querySelector('.back-button').addEventListener('click', goBack);
+            
+            // Language selector
+            document.querySelector('.language-selector').addEventListener('change', function(e) {
+                changeLanguage(e.target.value);
+            });
+            
+            // Audio buttons
+            document.querySelectorAll('.audio-button').forEach(btn => {
+                btn.addEventListener('click', playAudio);
+            });
+        });
+
+        // Add service worker for offline functionality
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+
+        // Add touch gestures for better mobile experience
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        }, false);
+
+        document.addEventListener('touchend', e => {
+            const touchEndX = e.changedTouches[0].screenX;
+            const touchEndY = e.changedTouches[0].screenY;
+            const diffX = touchStartX - touchEndX;
+            const diffY = touchStartY - touchEndY;
+            
+            // Swipe right to go back
+            if (Math.abs(diffX) > Math.abs(diffY) && diffX < -100) {
+                if (navigationStack.length > 0) {
+                    goBack();
+                }
+            }
+        }, false);
+
+    </script>
+</body>
+</html>
